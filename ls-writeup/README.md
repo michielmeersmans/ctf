@@ -100,3 +100,6 @@ struct input_event {
 Additionally I used the evdev python module to replay the events to make my computer actually type out the flag.
 
 The script to do all this can be found [here](decrypt.py)
+
+Running this made my computer type out the flag:
+`31C3_7yp3_s4f3ty!1`
