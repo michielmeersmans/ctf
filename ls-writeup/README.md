@@ -71,3 +71,32 @@ So putting this together I assumed the program flow was as follows:
 - Capture all key events and encrypt them using salsa20 with a key received by the server
 - Send the encrypted events to the server
 
+However, to encrypt/decrypt using Salsa20 a nonce is also needed. 
+Looking back at the binary where the salsa20 encrypt is being called we see a couple of parameters:
+
+![screenshot2](screenshot2.png)
+- rsi contains pointer to key event data (=rsp)
+- rdi contains pointer to where the encrypted key event data will be stored (=rsp)
+- rdx/edx contains length of data to encrypt (= 0x18)
+- r8 contains the pointer to the key
+- rcx which is the only one left over, this must be the nonce then!
+
+I then put a breakpoint right before the encryption to find out the nonce. It seemed like it started at 0 and then got increased by 1 every encryption.
+
+Putting all the findings together we can create a python script using the previously mentioned library to decrypt the data in the pcap!
+
+After the events are encrypted all there's left to do is parse the key events and extract what the victim was typing.
+
+Some googling taught me that the key events are stored in a struct:
+```c
+struct input_event {
+	struct timeval time; 
+	__u16 type; 
+	__u16 code; 
+	__s32 value;
+};
+```
+
+Additionally I used the evdev python module to replay the events to make my computer actually type out the flag.
+
+The script to do all this can be found [here](decrypt.py)
