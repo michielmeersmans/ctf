@@ -50,3 +50,24 @@ Next I took the following steps:
 - Put a read watchpoint (rwatch *buf in gdb) on this address to find out where the key is being used
 
 ![screenshot2](screenshot2.png)
+
+The key was being used in at address 0x43afb1 which was part of the subroutine sub_43AEA0 so I assumed this was the encryption method. 
+
+After looking at this method I was ready to give up. The method is a giant clutter of assembly instructions. 
+
+However I kept digging trough it with gdb and noticed the r8 registered contained the "2-by" string which was rater interesting. I traced this back to 0x43B00E which had the following instructions:
+```
+mov     rdx, 61707865h
+mov     rcx, 3320646Eh
+mov     r8, 79622D32h
+mov     rax, 6B206574h
+```
+
+The string "expand 32-byte k" was being loaded in those 4 registers. A quick google search learnt me that this string was used in the Salsa20 encryption library. [http://cr.yp.to/snuffle/salsa20/merged/salsa20.c](http://cr.yp.to/snuffle/salsa20/merged/salsa20.c)
+I also find this great [python salsa20 library](https://github.com/keybase/python-salsa20) which we'll use later.
+
+So putting this together I assumed the program flow was as follows:
+- Make a connection to 188.40.18.94:1024
+- Capture all key events and encrypt them using salsa20 with a key received by the server
+- Send the encrypted events to the server
+
