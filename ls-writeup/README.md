@@ -63,8 +63,9 @@ mov     r8, 79622D32h
 mov     rax, 6B206574h
 ```
 
-The string "expand 32-byte k" was being loaded in those 4 registers. A quick google search learnt me that this string was used in the Salsa20 encryption library. [http://cr.yp.to/snuffle/salsa20/merged/salsa20.c](http://cr.yp.to/snuffle/salsa20/merged/salsa20.c)
-I also find this great [python salsa20 library](https://github.com/keybase/python-salsa20) which we'll use later.
+The string "expand 32-byte k" was being loaded in those 4 registers. A quick google search learnt me that this string was used in the Salsa20 encryption library. [http://cr.yp.to/snuffle/salsa20/merged/salsa20.c](http://cr.yp.to/snuffle/salsa20/merged/salsa20.c).
+
+I also found this great [python salsa20 library](https://github.com/keybase/python-salsa20) which we'll use later.
 
 So putting this together I assumed the program flow was as follows:
 - Make a connection to 188.40.18.94:1024
