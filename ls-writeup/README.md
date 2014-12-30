@@ -74,7 +74,7 @@ So putting this together I assumed the program flow was as follows:
 However, to encrypt/decrypt using Salsa20 a nonce is also needed. 
 Looking back at the binary where the salsa20 encrypt is being called we see a couple of parameters:
 
-![screenshot2](screenshot2.png)
+![screenshot3](screenshot3.png)
 - rsi contains pointer to key event data (=rsp)
 - rdi contains pointer to where the encrypted key event data will be stored (=rsp)
 - rdx/edx contains length of data to encrypt (= 0x18)
