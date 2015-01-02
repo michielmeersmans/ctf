@@ -1,7 +1,11 @@
-LS
-===
+# 31c3 CTF 2014: ls
 
-> we found this [binary](ls) and captured some [traffic](ls.pcap)...
+**Category:** malware
+**Points:** 25
+**Solves:** 14
+**Description:**
+
+> We found [this](ls) binary and [captured](ls.pcap) some traffic…
 
 ## Write-up
 
@@ -104,3 +108,7 @@ The script to do all this can be found [here](decrypt.py)
 
 Running this made my computer type out the flag:
 `31C3_7yp3_s4f3ty!1`
+
+## Other write-ups and resources
+
+* none yet
